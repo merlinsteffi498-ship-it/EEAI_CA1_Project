@@ -27,8 +27,8 @@ def get_embeddings(df:pd.DataFrame):
     X = get_tfidf_embd(df)  # get tf-idf embeddings
     return X, df
 
-def get_data_object(X: np.ndarray, df: pd.DataFrame):
-    return Data(X, df)
+def get_data_object(X: np.ndarray, df: pd.DataFrame, target_col: str):
+    return Data(X, df, target_col)
 
 def perform_modelling(data: Data, df: pd.DataFrame, name):
     model_predict(data, df, name)
@@ -43,8 +43,26 @@ if __name__ == '__main__':
     
     # data transformation
     X, group_df = get_embeddings(df)
-    # data modelling
-    data = get_data_object(X, df)
-    # modelling
-    perform_modelling(data, df, 'name')
+    
+    # --- DESIGN CHOICE 1: CHAINED MULTI-OUTPUTS ---
+    
+    # 1. Create the chained target variables in the dataframe
+    df['chain_1'] = df['y2'].astype(str)
+    df['chain_2'] = df['y2'].astype(str) + "_" + df['y3'].astype(str)
+    df['chain_3'] = df['y2'].astype(str) + "_" + df['y3'].astype(str) + "_" + df['y4'].astype(str)
+    
+    # 2. Define the chains we want to iterate through
+    target_chains = ['chain_1', 'chain_2', 'chain_3']
+    
+    # 3. Loop through each chain, encapsulate the data, and run the model
+    for target in target_chains:
+        print(f"\n{'='*40}")
+        print(f"Executing Pipeline for Target: {target}")
+        print(f"{'='*40}")
+        
+        # Encapsulate data specifically for this chained target
+        data = get_data_object(X, df, target)
+        
+        # Execute modelling
+        perform_modelling(data, df, 'RandomForest')
 
