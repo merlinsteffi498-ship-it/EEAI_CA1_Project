@@ -17,4 +17,4 @@ def get_tfidf_embd(df: pd.DataFrame) -> np.ndarray:
     # Learn the vocabulary and return the document-term matrix
     X = vectorizer.fit_transform(combined_text).toarray()
     
-    return X#Methods related to converting text in into numeric representation and then returning numeric representation may go here
+    return X
