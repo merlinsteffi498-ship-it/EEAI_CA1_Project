@@ -8,7 +8,6 @@ def get_tfidf_embd(df: pd.DataFrame) -> np.ndarray:
     Converts textual data into a numeric representation using TF-IDF.
     """
     print("Generating TF-IDF embeddings...")
-    # Initialize the vectorizer. We limit to 5000 features to keep it efficient.
     vectorizer = TfidfVectorizer(max_features=5000)
     
     # Combine the Ticket Summary and Interaction Content for richer context

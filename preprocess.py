@@ -5,7 +5,7 @@ from Config import Config
 def get_input_data():
     """Loads the datasets and maps the target columns."""
     print("Loading datasets...")
-    # Load data using Mac-friendly paths
+
     df1 = pd.read_csv('data/AppGallery.csv', skipinitialspace=True)
     df2 = pd.read_csv('data/Purchasing.csv', skipinitialspace=True)
     
@@ -30,7 +30,6 @@ def get_input_data():
 def de_duplication(df):
     """Removes duplicate text and signatures."""
     print("Running de-duplication...")
-    # Drop literal duplicates
     df = df.drop_duplicates(subset=[Config.TICKET_SUMMARY, Config.INTERACTION_CONTENT])
     return df
 

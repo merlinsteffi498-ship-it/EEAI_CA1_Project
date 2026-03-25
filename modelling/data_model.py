@@ -13,12 +13,11 @@ class Data():
         """
         Encapsulates the data and performs the train-test split.
         """
-        # 1. Store the full embeddings and target variable
+        # Store the full embeddings and target variable
         self.embeddings = X
         self.y = df[target_col].values
 
-        # 2. Split the data into 80% training and 20% testing
-        # We also split the indices to keep track of the original dataframe rows
+        # Split the data into 80% training and 20% testing 
         indices = np.arange(len(df))
         self.X_train, self.X_test, self.y_train, self.y_test, idx_train, idx_test = train_test_split(
             self.embeddings, self.y, indices, test_size=0.2, random_state=seed
